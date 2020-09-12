@@ -51,12 +51,13 @@ const LeadService = {
             console.log(err)
         }
     },
-    async updateLadsCommunication() {
-        const encodedURI = window.encodeURI(`${REACT_APP_API_URL}/api/leads/`);
+    async updateLadsComm(id,commData) {
+        const encodedURI = window.encodeURI(`${REACT_APP_API_URL}/api/mark_lead/${id}`);
         try {
             return await axios({
                 method: "PUT",
                 url: encodedURI,
+                data: commData,
                 'headers': {
                     'Content-Type': 'application/json',
                 }

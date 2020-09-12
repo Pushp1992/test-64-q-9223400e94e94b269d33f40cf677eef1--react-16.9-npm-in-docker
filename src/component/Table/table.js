@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
-import HomePage from '../HomePage';
+import UpdateLead from '../Modal/updateModal';
 import CustomToastr from '../../utils/toastr';
 import LeadService from '../../service/leadService';
 
@@ -38,11 +38,26 @@ const useStyles = makeStyles({
 });
 
 
-
-export default function CustomizedTables(rowData) {
+export default function CustomizedTables() {
     const classes = useStyles();
+    const [DOMrender, setDOMrender] = useState(false);
+    const [rows, setRows] = useState([]);
 
-    const rows = rowData.rows;
+    useEffect(() => {
+        getAllLeadsData();
+    }, [DOMrender]);
+
+    const getAllLeadsData = async () => {
+        let response = await LeadService.getLadsData();
+
+        try {
+            if (!response) CustomToastr.error('unable to fetch Leads Data');
+            setRows(response);
+
+        } catch (error) {
+            CustomToastr.error('SOmething went wrong' || error)
+        }
+    };
 
     const performAction = (event, id) => {
         event.preventDefault();
@@ -50,69 +65,67 @@ export default function CustomizedTables(rowData) {
 
         if (name === 'create') {
             createLead();
-            console.log('create')
         };
         if (name === 'update') {
             updateCommunication();
-            console.log('update')
         };
         if (name === 'delete') {
             deleteLead(id);
-            console.log('delete')
         };
-
-        console.log(id)
-    }
+    };
 
     const createLead = async () => {
         //
     };
-    const updateCommunication = async () => {
+    const updateCommunication = () => {
         //
     };
     const deleteLead = async (id) => {
         let response = await LeadService.deleteLadsData(id);
         try {
             if (!response) CustomToastr.error('unable to fetch Leads Data');
+            setDOMrender(DOMrender => !DOMrender);
             CustomToastr.success("Lead Successfully removed");
         } catch (error) {
             CustomToastr.error('Something went wrong in deleting Current Lead' || error)
         }
     };
 
-
     return (
-        <TableContainer component={Paper}>
-            <Button variant="contained" color="primary" size="small" name="create" onClick={e => performAction(e)}>Add Lead</Button>
-            <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Name</StyledTableCell>
-                        <StyledTableCell align="right">Last Name</StyledTableCell>
-                        <StyledTableCell align="right">Mobile</StyledTableCell>
-                        <StyledTableCell align="right">Email</StyledTableCell>
-                        <StyledTableCell align="right">Location Type</StyledTableCell>
-                        <StyledTableCell align="right">Location String</StyledTableCell>
-                        <StyledTableCell align="right">Actions</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map(row => (
-                        <StyledTableRow key={row.id}>
-                            <StyledTableCell component="th" scope="row">{row.first_name}</StyledTableCell>
-                            <StyledTableCell align="right">{row.last_name}</StyledTableCell>
-                            <StyledTableCell align="right">{row.mobile}</StyledTableCell>
-                            <StyledTableCell align="right">{row.email}</StyledTableCell>
-                            <StyledTableCell align="right">{row.location_type}</StyledTableCell>
-                            <StyledTableCell align="right">{row.location_string}</StyledTableCell>
-                            <StyledTableCell align="right">
-                                <Button variant="contained" color="primary" size="small" name="update" onClick={e => performAction(e, row.id)}>Mark Update</Button> {' '}
-                                <Button variant="contained" color="primary" size="small" name="delete" onClick={e => performAction(e, row.id)}>Delete</Button>
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <React.Fragment>
+            <TableContainer component={Paper}>
+                <Button variant="contained" color="primary" size="small" name="create" onClick={e => performAction(e)}>Add Lead</Button>
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Name</StyledTableCell>
+                            <StyledTableCell align="right">Last Name</StyledTableCell>
+                            <StyledTableCell align="right">Mobile</StyledTableCell>
+                            <StyledTableCell align="right">Email</StyledTableCell>
+                            <StyledTableCell align="right">Location Type</StyledTableCell>
+                            <StyledTableCell align="right">Location String</StyledTableCell>
+                            <StyledTableCell align="right">Actions</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map(row => (
+                            <StyledTableRow key={row.id}>
+                                <StyledTableCell component="th" scope="row">{row.first_name}</StyledTableCell>
+                                <StyledTableCell align="right">{row.last_name}</StyledTableCell>
+                                <StyledTableCell align="right">{row.mobile}</StyledTableCell>
+                                <StyledTableCell align="right">{row.email}</StyledTableCell>
+                                <StyledTableCell align="right">{row.location_type}</StyledTableCell>
+                                <StyledTableCell align="right">{row.location_string}</StyledTableCell>
+                                <StyledTableCell align="right">
+                                    {/* <Button variant="contained" color="primary" size="small" name="update" onClick={e => performAction(e, row.id)}>Mark Update</Button> {' '} */}
+                                    <UpdateLead id={row.id} comm={row.communication} /> {''}
+                                    <Button variant="contained" color="primary" size="small" name="delete" onClick={e => performAction(e, row.id)}>Delete</Button>
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </React.Fragment>
     );
 }
