@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
+import CreateLead from '../Modal/createModal';
 import UpdateLead from '../Modal/updateModal';
 import CustomToastr from '../../utils/toastr';
 import LeadService from '../../service/leadService';
@@ -94,7 +95,8 @@ export default function CustomizedTables() {
     return (
         <React.Fragment>
             <TableContainer component={Paper}>
-                <Button variant="contained" color="primary" size="small" name="create" onClick={e => performAction(e)}>Add Lead</Button>
+                {/* <Button variant="contained" color="primary" size="small" name="create" onClick={e => performAction(e)}>Add Lead</Button> */}
+                <CreateLead />
                 <Table className={classes.table} aria-label="customized table">
                     <TableHead>
                         <TableRow>
@@ -108,7 +110,7 @@ export default function CustomizedTables() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map(row => (
+                        {(rows || []).reverse().map(row => (
                             <StyledTableRow key={row.id}>
                                 <StyledTableCell component="th" scope="row">{row.first_name}</StyledTableCell>
                                 <StyledTableCell align="right">{row.last_name}</StyledTableCell>

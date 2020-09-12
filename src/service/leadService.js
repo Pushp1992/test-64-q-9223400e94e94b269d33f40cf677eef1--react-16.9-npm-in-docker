@@ -19,12 +19,13 @@ const LeadService = {
             console.log(err)
         }
     },
-    async addLadsData() {
+    async createLadsData(payload) {
         const encodedURI = window.encodeURI(`${REACT_APP_API_URL}/api/leads/`);
         try {
             return await axios({
                 method: "POST",
                 url: encodedURI,
+                data: payload,
                 'headers': {
                     'Content-Type': 'application/json',
                 }

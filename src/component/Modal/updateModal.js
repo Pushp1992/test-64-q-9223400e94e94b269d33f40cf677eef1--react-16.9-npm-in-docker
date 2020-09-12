@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
@@ -61,7 +60,7 @@ const DialogActions = withStyles((theme) => ({
 
 export default function UpdateLeadComm(props) {
     const [open, setOpen] = useState(false);
-    const [communication, setCommunication] = useState(null);
+    const [communication, setCommunication] = useState(props.comm);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -93,7 +92,7 @@ export default function UpdateLeadComm(props) {
                     Mark Communication
                 </DialogTitle>
                 <DialogContent dividers>
-                    <TextField autoFocus={true} margin="dense" id="name" label="Communication" type="email" defaultValue={props.comm}
+                    <TextField autoFocus={true} margin="dense" id="name" label="Communication" type="text" value={communication}
                         variant="outlined" rows={8} multiline fullWidth onChange={e => setCommunication(e.target.value)} />
                 </DialogContent>
                 <DialogActions>
