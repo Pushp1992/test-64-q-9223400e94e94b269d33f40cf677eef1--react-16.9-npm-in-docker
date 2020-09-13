@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
+import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PageRefresh from '../../utils/refresh';
 import LeadService from '../../service/leadService';
@@ -85,9 +86,15 @@ export default function DeleteLeadComm(props) {
                 </DialogTitle>
                 <form name="deleteForm" className="delete_lead_form">
                     <DialogContent dividers>
-                        <Button className="delete_lead_btn" variant="contained" color="secondary" name="delete" onClick={e => deleteLead(e)}
-                            startIcon={<DeleteIcon />}>Delete</Button> {''}
-                        <Button autoFocus onClick={handleClose} variant="contained">Cancel</Button>
+                        <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                                <Button className="delete_lead_btn" variant="contained" color="secondary" name="delete"
+                                    onClick={e => deleteLead(e)} startIcon={<DeleteIcon />}>Delete</Button>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Button autoFocus onClick={handleClose} variant="contained">Cancel</Button>
+                            </Grid>
+                        </Grid>
                     </DialogContent>
                 </form>
             </Dialog>
