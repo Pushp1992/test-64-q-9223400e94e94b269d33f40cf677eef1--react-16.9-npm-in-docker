@@ -90,31 +90,44 @@ const DialogActions = withStyles((theme) => ({
 export default function CreateLeadComm() {
     const classes = useStyles();
 
-    const [open, setOpen] = useState(false);
-    const [state, setState] = useState({
+    const initialState = {
         first_name: '',
         last_name: '',
         email: '',
         mobile: '',
         location_type: '',
         location_string: ''
-    });
+    };
 
+    const [enableSubmit, setEnableSubmit] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [state, setState] = useState(initialState);
+
+    useEffect(() => {
+        if (Object.values(state).includes('')) {
+            setEnableSubmit(false)
+        } else {
+            setEnableSubmit(true);
+        }
+    }, [state]);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
+
     const handleClose = () => {
+        setState({ ...initialState });
         setOpen(false);
     };
+
     const handleChange = (event) => {
         event.preventDefault();
-
         const { name, value } = event.target;
         setState(prevState => {
             return { ...prevState, [name]: value }
-        })
-    }
+        });
+    };
+
     const createLead = async (event) => {
         event.preventDefault();
         try {
@@ -124,7 +137,7 @@ export default function CreateLeadComm() {
                 setOpen(false);
             }
         } catch (err) {
-            CustomToastr.error("Unable to Create Leads, please try again" || err)
+            CustomToastr.error("Unable to Create Leads, please try again" || err);
         }
     };
 
@@ -133,7 +146,8 @@ export default function CreateLeadComm() {
             <Button variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
                 Add Lead
             </Button>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} TransitionComponent={Transition} fullWidth={true}>
+            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} TransitionComponent={Transition}
+                fullWidth={true} disableBackdropClick={true} disableEscapeKeyDown={true}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Add Lead
                 </DialogTitle>
@@ -178,9 +192,8 @@ export default function CreateLeadComm() {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={e => createLead(e)} color="primary">
-                        Save
-                    </Button>
+                    <Button autoFocus onClick={handleClose} color="secomdary" variant="outlined">Close</Button>
+                    <Button autoFocus onClick={e => createLead(e)} color="primary" variant="contained" disabled={!enableSubmit}>Save</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>
