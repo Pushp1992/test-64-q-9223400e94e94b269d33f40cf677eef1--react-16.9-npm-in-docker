@@ -32,7 +32,7 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
-    table: {
+    leads_table: {
         minWidth: 700,
     },
 });
@@ -59,7 +59,7 @@ export default function CustomizedTables() {
         <React.Fragment>
             <TableContainer component={Paper}>
                 <CreateLead />
-                <Table className={classes.table} aria-label="customized table">
+                <Table className={classes.leads_table} aria-label="customized table">
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Name</StyledTableCell>

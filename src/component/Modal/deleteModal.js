@@ -75,7 +75,7 @@ export default function DeleteLeadComm(props) {
 
     return (
         <React.Fragment>
-            <Button variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
+            <Button className="delete_lead_modal_btn" variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
                 Delete
             </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} TransitionComponent={Transition}
@@ -83,11 +83,13 @@ export default function DeleteLeadComm(props) {
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Do You Wish To Delete This Lead ?
                 </DialogTitle>
-                <DialogContent dividers>
-                    <Button variant="contained" color="secondary" name="delete" onClick={e => deleteLead(e)}
-                        startIcon={<DeleteIcon />}>Delete</Button> {''}
-                    <Button autoFocus onClick={handleClose} variant="contained">Cancel</Button>
-                </DialogContent>
+                <form name="deleteForm" className="delete_lead_form">
+                    <DialogContent dividers>
+                        <Button className="delete_lead_btn" variant="contained" color="secondary" name="delete" onClick={e => deleteLead(e)}
+                            startIcon={<DeleteIcon />}>Delete</Button> {''}
+                        <Button autoFocus onClick={handleClose} variant="contained">Cancel</Button>
+                    </DialogContent>
+                </form>
             </Dialog>
         </React.Fragment>
     );

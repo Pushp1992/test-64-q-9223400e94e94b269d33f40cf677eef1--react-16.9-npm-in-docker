@@ -77,9 +77,9 @@ export default function UpdateLeadComm(props) {
             let comm = { communication: communication };
             let response = await LeadService.updateLadsComm(props.id, comm);
             if (response.status === "Contacted") {
-                CustomToastr.success("Communication updated Successfully");
                 setOpen(false);
                 PageRefresh();
+                CustomToastr.success("Communication updated Successfully");
             }
         } catch (err) {
             CustomToastr.error("Unable to save Communication details" || err)
@@ -88,7 +88,7 @@ export default function UpdateLeadComm(props) {
 
     return (
         <React.Fragment>
-            <Button variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
+            <Button className="update_lead_modal_btn" variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
                 Mark Update
             </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} TransitionComponent={Transition}
@@ -96,14 +96,16 @@ export default function UpdateLeadComm(props) {
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Mark Communication
                 </DialogTitle>
-                <DialogContent dividers>
-                    <TextField autoFocus={true} margin="dense" id="name" label="Communication" type="text" value={communication}
-                        variant="outlined" rows={8} multiline fullWidth onChange={e => setCommunication(e.target.value)} />
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="secomdary" variant="outlined">Close</Button>
-                    <Button autoFocus onClick={e => saveLeadComm(e)} variant="contained" color="primary">Save</Button>
-                </DialogActions>
+                <form name="updateForm" className="update_lead_form">
+                    <DialogContent dividers>
+                        <TextField autoFocus={true} margin="dense" name="communication" label="Communication" type="text" value={communication}
+                            variant="outlined" rows={8} multiline fullWidth onChange={e => setCommunication(e.target.value)} />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={handleClose} color="secomdary" variant="outlined">Close</Button>
+                        <Button className="update_lead_btn" autoFocus onClick={e => saveLeadComm(e)} variant="contained" color="primary">Save</Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </React.Fragment>
     );

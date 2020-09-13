@@ -143,7 +143,7 @@ export default function CreateLeadComm() {
 
     return (
         <React.Fragment>
-            <Button variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
+            <Button className="add_lead_modal_btn" variant="contained" color="primary" size="small" name="update" onClick={handleClickOpen}>
                 Add Lead
             </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} TransitionComponent={Transition}
@@ -152,48 +152,50 @@ export default function CreateLeadComm() {
                     ADD Lead
                 </DialogTitle>
                 <DialogContent dividers>
-                    <div>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <TextField type="text" name="first_name" value={state.first_name} onChange={e => handleChange(e)}
-                                label="First Name" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
-                        </FormControl>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <TextField type="text" name="last_name" value={state.last_name} onChange={e => handleChange(e)}
-                                label="Last Name" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
-                        </FormControl>
-                    </div>
-                    <div>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <TextField type="email" name="email" value={state.email} onChange={e => handleChange(e)}
-                                label="Email Address" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
-                        </FormControl>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <TextField type="number" name="mobile" value={state.mobile} onChange={e => handleChange(e)}
-                                label="Mobile Number" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
-                        </FormControl>
-                    </div>
-                    <div>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel className={classes.inputLabel} id="locType">Location Type</InputLabel>
-                            <Select label="Location Type" name="location_type" value={state.location_type} onChange={e => handleChange(e)} className={classes.selectBox}>
-                                {
-                                    LocationList.length !== 0 ?
-                                        LocationList.map((type, index) => {
-                                            return <MenuItem className={classes.selectOption} key={index} value={type.name}>{type.name}</MenuItem>
-                                        }) : <MenuItem className={classes.selectOption} value="">Unable to get Type</MenuItem>
-                                }
-                            </Select>
-                        </FormControl>
+                    <form name="createForm" className="add_lead_form">
+                        <div>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <TextField type="text" name="first_name" value={state.first_name} onChange={e => handleChange(e)}
+                                    label="First Name" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
+                            </FormControl>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <TextField type="text" name="last_name" value={state.last_name} onChange={e => handleChange(e)}
+                                    label="Last Name" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
+                            </FormControl>
+                        </div>
+                        <div>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <TextField type="email" name="email" value={state.email} onChange={e => handleChange(e)}
+                                    label="Email Address" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
+                            </FormControl>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <TextField type="number" name="mobile" value={state.mobile} onChange={e => handleChange(e)}
+                                    label="Mobile Number" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
+                            </FormControl>
+                        </div>
+                        <div>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel className={classes.inputLabel} id="locType">Location Type</InputLabel>
+                                <Select label="Location Type" name="location_type" value={state.location_type} onChange={e => handleChange(e)} className={classes.selectBox}>
+                                    {
+                                        LocationList.length !== 0 ?
+                                            LocationList.map((type, index) => {
+                                                return <MenuItem className={classes.selectOption} key={index} value={type.name}>{type.name}</MenuItem>
+                                            }) : <MenuItem className={classes.selectOption} value="">Unable to get Type</MenuItem>
+                                    }
+                                </Select>
+                            </FormControl>
 
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <TextField type="text" name="location_string" value={state.location_string} onChange={e => handleChange(e)}
-                                label="Location String" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
-                        </FormControl>
-                    </div>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <TextField type="text" name="location_string" value={state.location_string} onChange={e => handleChange(e)}
+                                    label="Location String" variant="outlined" size="small" InputLabelProps={{ shrink: true }} />
+                            </FormControl>
+                        </div>
+                    </form>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleClose} color="secomdary" variant="outlined">Close</Button>
-                    <Button autoFocus onClick={e => createLead(e)} color="primary" variant="contained" disabled={!enableSubmit}>Save</Button>
+                    <Button className="add_lead_btn" autoFocus onClick={e => createLead(e)} color="primary" variant="contained" disabled={!enableSubmit}>Save</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>
