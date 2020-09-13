@@ -49,30 +49,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-// const SearchComponent = () => {
-//     const classes = useStyles();
-
-//     const handleSearch = async () => {
-//         console.log('search');
-//     };
-//     const handleReset = async () => {
-//         console.log('reset');
-//     };
-//     return (
-//         <React.Fragment>
-//             <FormControl variant="outlined" className={classes.formControl}>
-//                 <TextField placeholder="search location string" variant="outlined" size="small" onChange={e => } />
-//             </FormControl>
-//             <FormControl variant="outlined" className={classes.btn}>
-//                 <Button autoFocus onClick={handleSearch} size="sm" color="primary" variant="outlined">Search</Button>
-//             </FormControl>
-//             <FormControl variant="outlined">
-//                 <Button autoFocus onClick={handleReset} size="sm" color="secomdary" variant="outlined">Reset</Button>
-//             </FormControl>
-//         </React.Fragment>
-//     )
-// };
-
 export default function CustomizedTables() {
     const classes = useStyles();
     const [rows, setRows] = useState([]);
