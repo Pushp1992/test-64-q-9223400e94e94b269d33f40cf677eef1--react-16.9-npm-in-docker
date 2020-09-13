@@ -6,11 +6,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-
 import CreateLead from '../Modal/createModal';
 import UpdateLead from '../Modal/updateModal';
+import DeleteLead from '../Modal/deleteModal';
 import CustomToastr from '../../utils/toastr';
 import LeadService from '../../service/leadService';
 
@@ -38,64 +37,27 @@ const useStyles = makeStyles({
     },
 });
 
-
 export default function CustomizedTables() {
     const classes = useStyles();
-    const [DOMrender, setDOMrender] = useState(false);
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
         getAllLeadsData();
-    }, [DOMrender]);
+    }, []);
 
     const getAllLeadsData = async () => {
         let response = await LeadService.getLadsData();
-
         try {
             if (!response) CustomToastr.error('unable to fetch Leads Data');
             setRows(response);
-
         } catch (error) {
             CustomToastr.error('SOmething went wrong' || error)
-        }
-    };
-
-    const performAction = (event, id) => {
-        event.preventDefault();
-        let name = event.currentTarget.name;
-
-        if (name === 'create') {
-            createLead();
-        };
-        if (name === 'update') {
-            updateCommunication();
-        };
-        if (name === 'delete') {
-            deleteLead(id);
-        };
-    };
-
-    const createLead = async () => {
-        //
-    };
-    const updateCommunication = () => {
-        //
-    };
-    const deleteLead = async (id) => {
-        let response = await LeadService.deleteLadsData(id);
-        try {
-            if (!response) CustomToastr.error('unable to fetch Leads Data');
-            setDOMrender(DOMrender => !DOMrender);
-            CustomToastr.success("Lead Successfully removed");
-        } catch (error) {
-            CustomToastr.error('Something went wrong in deleting Current Lead' || error)
         }
     };
 
     return (
         <React.Fragment>
             <TableContainer component={Paper}>
-                {/* <Button variant="contained" color="primary" size="small" name="create" onClick={e => performAction(e)}>Add Lead</Button> */}
                 <CreateLead />
                 <Table className={classes.table} aria-label="customized table">
                     <TableHead>
@@ -119,9 +81,8 @@ export default function CustomizedTables() {
                                 <StyledTableCell align="right">{row.location_type}</StyledTableCell>
                                 <StyledTableCell align="right">{row.location_string}</StyledTableCell>
                                 <StyledTableCell align="right">
-                                    {/* <Button variant="contained" color="primary" size="small" name="update" onClick={e => performAction(e, row.id)}>Mark Update</Button> {' '} */}
                                     <UpdateLead id={row.id} comm={row.communication} /> {''}
-                                    <Button variant="contained" color="primary" size="small" name="delete" onClick={e => performAction(e, row.id)}>Delete</Button>
+                                    <DeleteLead id={row.id} />
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

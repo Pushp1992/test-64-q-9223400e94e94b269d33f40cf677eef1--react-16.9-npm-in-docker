@@ -15,7 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-
+import PageRefresh from '../../utils/refresh';
 import LeadService from '../../service/leadService';
 import CustomToastr from '../../utils/toastr';
 import { LocationList } from '../../utils/utils';
@@ -89,7 +89,6 @@ const DialogActions = withStyles((theme) => ({
 
 export default function CreateLeadComm() {
     const classes = useStyles();
-
     const initialState = {
         first_name: '',
         last_name: '',
@@ -114,12 +113,10 @@ export default function CreateLeadComm() {
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setState({ ...initialState });
         setOpen(false);
     };
-
     const handleChange = (event) => {
         event.preventDefault();
         const { name, value } = event.target;
@@ -127,14 +124,15 @@ export default function CreateLeadComm() {
             return { ...prevState, [name]: value }
         });
     };
-
     const createLead = async (event) => {
         event.preventDefault();
         try {
             let response = await LeadService.createLadsData(state);
             if (response) {
                 CustomToastr.success("Leads Created Successfully");
+                setState({ ...initialState });
                 setOpen(false);
+                PageRefresh();
             }
         } catch (err) {
             CustomToastr.error("Unable to Create Leads, please try again" || err);
