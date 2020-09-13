@@ -6,7 +6,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import CreateLead from '../Modal/createModal';
 import UpdateLead from '../Modal/updateModal';
 import DeleteLead from '../Modal/deleteModal';
@@ -31,20 +35,67 @@ const StyledTableRow = withStyles(theme => ({
     },
 }))(TableRow);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     leads_table: {
         minWidth: 700,
     },
-});
+    formControl: {
+        marginRight: theme.spacing(2),
+        minWidth: 220,
+        marginBottom: 25,
+    },
+    btn: {
+        marginRight: 20
+    }
+}));
+
+// const SearchComponent = () => {
+//     const classes = useStyles();
+
+//     const handleSearch = async () => {
+//         console.log('search');
+//     };
+//     const handleReset = async () => {
+//         console.log('reset');
+//     };
+//     return (
+//         <React.Fragment>
+//             <FormControl variant="outlined" className={classes.formControl}>
+//                 <TextField placeholder="search location string" variant="outlined" size="small" onChange={e => } />
+//             </FormControl>
+//             <FormControl variant="outlined" className={classes.btn}>
+//                 <Button autoFocus onClick={handleSearch} size="sm" color="primary" variant="outlined">Search</Button>
+//             </FormControl>
+//             <FormControl variant="outlined">
+//                 <Button autoFocus onClick={handleReset} size="sm" color="secomdary" variant="outlined">Reset</Button>
+//             </FormControl>
+//         </React.Fragment>
+//     )
+// };
 
 export default function CustomizedTables() {
     const classes = useStyles();
     const [rows, setRows] = useState([]);
+    const [locationString, setLocationString] = useState('');
 
     useEffect(() => {
         getAllLeadsData();
     }, []);
 
+    const handleSearch = async (event) => {
+        event.preventDefault();
+        try {
+            let input = locationString;
+            let response = await LeadService.searchByLocationString(input);
+            setRows(response);
+        } catch (err) {
+            CustomToastr.error('Unable to get result' || err);
+        }
+    };
+    const handleReset = async () => {
+        setLocationString('');
+        await getAllLeadsData();
+    };
     const getAllLeadsData = async () => {
         let response = await LeadService.getLadsData();
         try {
@@ -58,7 +109,24 @@ export default function CustomizedTables() {
     return (
         <React.Fragment>
             <TableContainer component={Paper}>
-                <CreateLead />
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}><CreateLead /></Grid>
+                    <Grid item xs={12} sm={6}>
+                        {/* <SearchComponent /> */}
+                        <React.Fragment>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <TextField placeholder="search location string" variant="outlined" size="small" onChange={e => setLocationString(e.target.value)} />
+                            </FormControl>
+                            <FormControl variant="outlined" className={classes.btn}>
+                                <Button onClick={handleSearch} size="sm" color="primary" variant="outlined">Search</Button>
+                            </FormControl>
+                            <FormControl variant="outlined">
+                                <Button onClick={handleReset} size="sm" color="secomdary" variant="outlined">Reset</Button>
+                            </FormControl>
+                        </React.Fragment>
+                    </Grid>
+                </Grid>
+                {/* <CreateLead /> */}
                 <Table className={classes.leads_table} aria-label="customized table">
                     <TableHead>
                         <TableRow>

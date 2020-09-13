@@ -69,6 +69,22 @@ const LeadService = {
             console.log(err)
         }
     },
+    async searchByLocationString(input) {
+        const encodedURI = window.encodeURI(`${REACT_APP_API_URL}/api/leads/?location_string=${input}`);
+        try {
+            return await axios({
+                method: "GET",
+                url: encodedURI,
+                'headers': {
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                return res.data;
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }
 
 export default LeadService;
