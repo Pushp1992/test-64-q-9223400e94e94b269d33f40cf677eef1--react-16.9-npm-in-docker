@@ -12,6 +12,7 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import PageRefresh from '../../utils/refresh';
 import LeadService from '../../service/leadService';
+import SaveIcon from '@material-ui/icons/Save';
 import CustomToastr from '../../utils/toastr';
 
 const styles = (theme) => ({
@@ -103,7 +104,8 @@ export default function UpdateLeadComm(props) {
                     </DialogContent>
                     <DialogActions>
                         <Button autoFocus onClick={handleClose} color="secomdary" variant="outlined">Close</Button>
-                        <Button className="update_lead_btn" autoFocus onClick={e => saveLeadComm(e)} variant="contained" color="primary">Save</Button>
+                        <Button className="update_lead_btn" autoFocus onClick={e => saveLeadComm(e)} variant="contained"
+                            color="primary" startIcon={<SaveIcon />}>Save</Button>
                     </DialogActions>
                 </form>
             </Dialog>

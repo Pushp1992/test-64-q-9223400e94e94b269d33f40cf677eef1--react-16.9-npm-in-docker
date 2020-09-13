@@ -18,6 +18,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import PageRefresh from '../../utils/refresh';
 import LeadService from '../../service/leadService';
 import CustomToastr from '../../utils/toastr';
+import SaveIcon from '@material-ui/icons/Save';
 import { LocationList } from '../../utils/utils';
 
 const styles = (theme) => ({
@@ -195,7 +196,8 @@ export default function CreateLeadComm() {
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleClose} color="secomdary" variant="outlined">Close</Button>
-                    <Button className="add_lead_btn" autoFocus onClick={e => createLead(e)} color="primary" variant="contained" disabled={!enableSubmit}>Save</Button>
+                    <Button className="add_lead_btn" autoFocus onClick={e => createLead(e)} color="primary"
+                        variant="contained" disabled={!enableSubmit} startIcon={<SaveIcon />}>Save</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>

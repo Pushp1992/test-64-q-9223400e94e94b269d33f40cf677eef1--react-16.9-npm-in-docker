@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import LeadsTable from './Table/table';
+import PaginationItem from './Table/pagination';
 
 function HomePage() {
     return (
@@ -13,6 +14,7 @@ function HomePage() {
                     </div>
                     <LeadsTable />
                 </Paper>
+                <PaginationItem />
             </Container>
         </React.Fragment>
     )
