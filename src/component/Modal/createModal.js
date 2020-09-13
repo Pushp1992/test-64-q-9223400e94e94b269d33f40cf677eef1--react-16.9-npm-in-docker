@@ -23,7 +23,9 @@ import { LocationList } from '../../utils/utils';
 const styles = (theme) => ({
     root: {
         margin: 0,
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
+        backgroundColor: 'black',
+        color: 'white'
     },
     closeButton: {
         position: 'absolute',
@@ -147,7 +149,7 @@ export default function CreateLeadComm() {
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} TransitionComponent={Transition}
                 fullWidth={true} disableBackdropClick={true} disableEscapeKeyDown={true}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Add Lead
+                    ADD Lead
                 </DialogTitle>
                 <DialogContent dividers>
                     <div>

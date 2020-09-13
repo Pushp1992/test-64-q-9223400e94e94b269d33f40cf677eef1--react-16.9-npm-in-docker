@@ -16,7 +16,9 @@ import CustomToastr from '../../utils/toastr';
 const styles = (theme) => ({
     root: {
         margin: 0,
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
+        backgroundColor: 'black',
+        color: 'white'
     },
     closeButton: {
         position: 'absolute',
@@ -46,7 +48,8 @@ const DialogTitle = withStyles(styles)((props) => {
 
 const DialogContent = withStyles((theme) => ({
     root: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(8),
+        backgroundColor: 'ghostwhite',
     },
 }))(MuiDialogContent);
 

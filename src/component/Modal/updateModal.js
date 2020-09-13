@@ -17,7 +17,9 @@ import CustomToastr from '../../utils/toastr';
 const styles = (theme) => ({
     root: {
         margin: 0,
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
+        backgroundColor: 'black',
+        color: 'white'
     },
     closeButton: {
         position: 'absolute',
